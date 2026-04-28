@@ -36,13 +36,18 @@
 
                 data.forEach(item => {
                     const card = `
-                        <div class="manga-card">
-                            <div class="title">${item.judul}</div>
-                            <a href="${item.link}" class="link-btn">Baca Sekarang</a>
-                        </div>
-                    `;
-                    container.innerHTML += card;
-                });
+                       <div class="manga-card" style="display: flex; gap: 15px;">
+                           <img src="${item.img}" style="width: 80px; border-radius: 8px; object-fit: cover;">
+                           <div>
+                              <div class="title">${item.judul}</div>
+                              <div style="font-size: 0.8em; color: #aaa;">${item.genre}</div>
+                              <a href="${item.link}" class="link-btn">Baca Sekarang</a>
+                           </div>
+                           </div>
+                        `;
+                        container.innerHTML += card;
+                     });
+                
             } catch (e) {
                 document.getElementById('list-manhwa').innerText = "Gagal memproses data.";
             }
