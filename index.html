@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nura Manhwa Reader App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: var(--tg-theme-bg-color); /* Ikut tema Telegram */
+            color: var(--tg-theme-text-color);
+            padding: 20px;
+            text-align: center;
+        }
+        .card {
+            background: rgba(128, 128, 128, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manhwa Updates 📚</h1>
+    <div id="container">
+        <div class="card">
+            <h3>Loading Manhwa...</h3>
+        </div>
+    </div>
+    <button onclick="closeApp()">Tutup Aplikasi</button>
+
+    <script>
+        // Inisialisasi Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Biar aplikasinya terbuka full screen
+
+        function closeApp() {
+            tg.close();
+        }
+
+        // Contoh data statis (nanti kita ambil dari scraper Python)
+        const container = document.getElementById('container');
+        // Di sini nanti kita akan panggil data dari backend
+    </script>
+</body>
+</html>
