@@ -34,19 +34,26 @@
                 const container = document.getElementById('list-manhwa');
                 container.innerHTML = ''; // Hapus tulisan loading
 
-                data.forEach(item => {
-                    const card = `
-                       <div class="manga-card" style="display: flex; gap: 15px;">
-                           <img src="${item.img}" style="width: 80px; border-radius: 8px; object-fit: cover;">
-                           <div>
-                              <div class="title">${item.judul}</div>
-                              <div style="font-size: 0.8em; color: #aaa;">${item.genre}</div>
-                              <a href="${item.link}" class="link-btn">Baca Sekarang</a>
-                           </div>
-                           </div>
-                        `;
-                        container.innerHTML += card;
-                     });
+               data.forEach(item => {
+    // Gunakan gambar placeholder kalau gambarnya kosong
+    const imgThumb = item.img || 'https://via.placeholder.com/150x200?text=No+Image';
+    
+    const card = `
+        <div class="manga-card" style="display: flex; gap: 15px; align-items: center;">
+            <div style="flex-shrink: 0;">
+                <img src="${imgThumb}" 
+                     style="width: 70px; height: 100px; border-radius: 8px; object-fit: cover; background: #333;"
+                     onerror="this.src='https://via.placeholder.com/150x200?text=Error'">
+            </div>
+            <div style="flex-grow: 1;">
+                <div class="title" style="margin-bottom: 5px;">${item.judul}</div>
+                <div style="font-size: 0.8em; color: #888; margin-bottom: 10px;">${item.genre}</div>
+                <a href="${item.link}" class="link-btn" style="padding: 5px 15px; font-size: 0.8em;">Detail</a>
+            </div>
+        </div>
+    `;
+    container.innerHTML += card;
+});
                 
             } catch (e) {
                 document.getElementById('list-manhwa').innerText = "Gagal memproses data.";
