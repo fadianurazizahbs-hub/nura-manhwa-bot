@@ -1,0 +1,56 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a1a;
+    color: white;
+    padding: 15px;
+}
+
+.manga-card {
+    background: #2d2d2d;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border-left: 5px solid #0088cc;
+    transition: transform 0.2s;
+}
+
+.manga-card:active {
+    transform: scale(0.98);
+}
+
+.manga-card img {
+    width: 70px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #333;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: #0088cc;
+}
+
+.link-btn {
+    background: #0088cc;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.error-msg {
+    color: #ff6b6b;
+    background: #3d1a1a;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}

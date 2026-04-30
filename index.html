@@ -3,61 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manhwa App</title>
+    <title>Nura Manhwa App</title>
+    <link rel="stylesheet" href="style.css"
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a1a; color: white; padding: 15px; }
-        .manga-card { background: #2d2d2d; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 5px solid #0088cc; }
-        .title { font-weight: bold; font-size: 1.1em; margin-bottom: 8px; color: #0088cc; }
-        .link-btn { background: #0088cc; color: white; text-decoration: none; padding: 8px 12px; border-radius: 6px; display: inline-block; margin-top: 10px; font-size: 0.9em; }
-        h1 { text-align: center; font-size: 1.5em; margin-bottom: 25px; }
-    </style>
 </head>
 <body>
-    <h1>Nura Manhwa Reader App 📚</h1>
-    <div id="list-manhwa">
-        <p style="text-align:center;">Menunggu kiriman data dari bot...</p>
+    <h2 style="text-align: center;">Nura Manhwa Reader 📚</h2>
+    <div id="display-area">
+        <p style="text-align: center; color: #888;">Memuat data...</p>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Fungsi untuk mengambil data dari URL (Trik Titip Pesan)
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataRaw = urlParams.get('data');
+        const display = document.getElementById('display-area');
 
-        if (dataRaw) {
-            try {
-                // Decode data yang dikirim bot
-                const data = JSON.parse(decodeURIComponent(dataRaw));
-                const container = document.getElementById('list-manhwa');
-                container.innerHTML = ''; // Hapus tulisan loading
+        try {
+            // 1. Ambil data dari URL
+            const params = new URLSearchParams(window.location.search);
+            const rawData = params.get('data');
 
-               data.forEach(item => {
-    // Gunakan gambar placeholder kalau gambarnya kosong
-    const imgThumb = item.img || 'https://via.placeholder.com/150x200?text=No+Image';
-    
-    const card = `
-        <div class="manga-card" style="display: flex; gap: 15px; align-items: center;">
-            <div style="flex-shrink: 0;">
-                <img src="${imgThumb}" 
-                     style="width: 70px; height: 100px; border-radius: 8px; object-fit: cover; background: #333;"
-                     onerror="this.src='https://via.placeholder.com/150x200?text=Error'">
-            </div>
-            <div style="flex-grow: 1;">
-                <div class="title" style="margin-bottom: 5px;">${item.judul}</div>
-                <div style="font-size: 0.8em; color: #888; margin-bottom: 10px;">${item.genre}</div>
-                <a href="${item.link}" class="link-btn" style="padding: 5px 15px; font-size: 0.8em;">Detail</a>
-            </div>
-        </div>
-    `;
-    container.innerHTML += card;
-});
-                
-            } catch (e) {
-                document.getElementById('list-manhwa').innerText = "Gagal memproses data.";
+            if (!rawData) {
+                display.innerHTML = '<p style="text-align:center;">Belum ada data. Coba ketik /update di bot.</p>';
+            } else {
+                // 2. Decode dan Parse data
+                const decodedData = decodeURIComponent(rawData);
+                const data = JSON.parse(decodedData);
+
+                if (data.length === 0) {
+                    display.innerHTML = '<p style="text-align:center;">Data kosong.</p>';
+                } else {
+                    display.innerHTML = ''; // Bersihkan tulisan memuat
+                    data.forEach(item => {
+                        const card = `
+                            <div class="manga-card">
+                                <img src="${item.img || 'https://via.placeholder.com/60x80?text=No+Img'}" onerror="this.src='https://via.placeholder.com/60x80?text=Error'">
+                                <div>
+                                    <div class="title">${item.judul}</div>
+                                    <div style="font-size:11px; color:#aaa; margin: 5px 0;">${item.genre}</div>
+                                    <a href="${item.link}" style="color:#0088cc; font-size:12px; text-decoration:none;">Buka Web →</a>
+                                </div>
+                            </div>
+                        `;
+                        display.innerHTML += card;
+                    });
+                }
             }
+        } catch (e) {
+            // Jika ada error, tampilkan pesan errornya di layar (tidak putih doang)
+            display.innerHTML = `
+                <div class="error-msg">
+                    <strong>Waduh, ada masalah!</strong><br>
+                    ${e.message}
+                </div>
+            `;
         }
     </script>
 </body>
